@@ -22,7 +22,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 public class PetsApiController implements PetsApi {
 	List<Pet> list = new ArrayList<Pet>();
 	private final NativeWebRequest request;
-	
+
 	@Autowired
 	public PetsApiController(NativeWebRequest request) {
 		this.request = request;
@@ -41,26 +41,39 @@ public class PetsApiController implements PetsApi {
 
 	@Override
 	public ResponseEntity<Void> createPets(@Valid Pet pet) {
-		if(list.stream().findFirst().filter(e -> pet.getId() == e.getId()).isPresent()) {
+		if (list.stream().findFirst().filter(e -> pet.getId() == e.getId()).isPresent()) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
-			list.add(new Pet(pet.getId(), pet.getName(), pet.getTag()));			
+			list.add(new Pet(pet.getId(), pet.getName(), pet.getTag()));
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		}
-		
+
 	}
 
 	@Override
 	public ResponseEntity<Pet> showPetById(String petId) {
 		Optional<Pet> optional = list.stream().findFirst().filter(e -> Long.parseLong(petId) == e.getId());
-		if(optional.isPresent()) {
-			return new ResponseEntity<>(optional.get(),HttpStatus.OK);
+		if (optional.isPresent()) {
+			return new ResponseEntity<>(optional.get(), HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(null,HttpStatus.OK);
+			return new ResponseEntity<>(null, HttpStatus.OK);
 		}
 
 	}
 
+
+
+	@Override
+	public ResponseEntity<Void> deletePets(String petId) {
+		Optional<Pet> optional = list.stream().findFirst().filter(e -> Long.parseLong(petId) == e.getId());
+		if (optional.isPresent()) {
+			list.remove(optional.get());
+			return new ResponseEntity<>( HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+		}
+	}
 	
 	
+
 }
