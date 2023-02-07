@@ -41,16 +41,24 @@ public class PetsApiController implements PetsApi {
 
 	@Override
 	public ResponseEntity<Void> createPets(@Valid Pet pet) {
-		list.add(new Pet(pet.getId(), pet.getName(), pet.getTag()));
+		if(list.stream().findFirst().filter(e -> pet.getId() == e.getId()).isPresent()) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			list.add(new Pet(pet.getId(), pet.getName(), pet.getTag()));			
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		}
 		
-		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@Override
 	public ResponseEntity<Pet> showPetById(String petId) {
+		Optional<Pet> optional = list.stream().findFirst().filter(e -> Long.parseLong(petId) == e.getId());
+		if(optional.isPresent()) {
+			return new ResponseEntity<>(optional.get(),HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null,HttpStatus.OK);
+		}
 
-		return new ResponseEntity<>(list.stream().findFirst().filter(e -> Long.parseLong(petId) == e.getId()).get(),
-				HttpStatus.OK);
 	}
 
 	
