@@ -43,7 +43,7 @@ public class PetsApiController implements PetsApi {
 	public ResponseEntity<Void> createPets(@Valid Pet pet) {
 		list.add(new Pet(pet.getId(), pet.getName(), pet.getTag()));
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@Override
