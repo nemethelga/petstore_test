@@ -42,7 +42,8 @@ public class PetsApiController implements PetsApi {
 	@Override
 	public ResponseEntity<Void> createPets(@Valid Pet pet) {
 		list.add(new Pet(pet.getId(), pet.getName(), pet.getTag()));
-		return PetsApi.super.createPets(pet);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@Override
@@ -52,4 +53,6 @@ public class PetsApiController implements PetsApi {
 				HttpStatus.OK);
 	}
 
+	
+	
 }
