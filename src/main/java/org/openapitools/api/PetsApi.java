@@ -68,6 +68,7 @@ public interface PetsApi {
     default ResponseEntity<Void> createPets(
         @Parameter(name = "Pet", description = "", required = true) @Valid @RequestBody Pet pet
     ) {
+    	
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
@@ -157,5 +158,24 @@ public interface PetsApi {
     }
     
     
+    
+    @Operation(
+            operationId = "deletePets",
+            summary = "Delete a pet",            
+            tags = { "pets" },
+            responses = {
+                @ApiResponse(responseCode = "200", description = "Null response"),
+                @ApiResponse(responseCode = "404", description = "Not found error")
+            }
+        )
+    @RequestMapping(
+            method = RequestMethod.DELETE,
+            value = "/pets/{petId}"
+        )
+        default ResponseEntity<Void> deletePets(
+            @Parameter(name = "petId",required = true) @PathVariable("petId") String petId
+        ) {        	
+            return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        }
 
 }
