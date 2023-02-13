@@ -52,7 +52,7 @@ public class PetsApiController implements PetsApi {
 
 	@Override
 	public ResponseEntity<Pet> showPetById(String petId) {
-		Optional<Pet> optional = list.stream().findFirst().filter(e -> Long.parseLong(petId) == e.getId());
+		Optional<Pet> optional = list.stream().filter(e -> Long.parseLong(petId) == e.getId()).findFirst();
 		if (optional.isPresent()) {
 			return new ResponseEntity<>(optional.get(), HttpStatus.OK);
 		} else {
