@@ -65,7 +65,7 @@ public class PetsApiController implements PetsApi {
 
 	@Override
 	public ResponseEntity<Void> deletePets(String petId) {
-		Optional<Pet> optional = list.stream().findFirst().filter(e -> Long.parseLong(petId) == e.getId());
+		Optional<Pet> optional = list.stream().filter(e -> Long.parseLong(petId) == e.getId()).findFirst();
 		if (optional.isPresent()) {
 			list.remove(optional.get());
 			return new ResponseEntity<>( HttpStatus.OK);
