@@ -56,7 +56,7 @@ public class PetsApiController implements PetsApi {
 		if (optional.isPresent()) {
 			return new ResponseEntity<>(optional.get(), HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(null, HttpStatus.OK);
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
 
 	}
